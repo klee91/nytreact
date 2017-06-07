@@ -21,7 +21,7 @@ app.use(express.static("./public"));
 //--------------------------- MONGOOSE ---------------------------
 // mongoose.connect('mongodb://localhost/nytreact');
 
-mongoose.connect('mongodb://heroku_phwldszd:ja782hpi2gkj2b8g6d1i48gibj@ds145148.mlab.com:45148/heroku_phwldszd');
+mongoose.connect('mongodb://heroku_q86tf6tq:m5nidhp2kv9hgp5tb5gjfmise2@ds139949.mlab.com:39949/heroku_q86tf6tq');
 var db = mongoose.connection;
 
 // Show any Mongoose errors
