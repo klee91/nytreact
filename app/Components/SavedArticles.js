@@ -6,7 +6,7 @@ var Search = require("./Search.js");
 var SavedArticles = React.createClass({
     getInitialState: function() {
         return {
-            savedArticles: []
+            savedArticles: [1]
         }
     },
     componentDidMount: function() {
@@ -20,7 +20,7 @@ var SavedArticles = React.createClass({
                     savedArticles: this.state.savedArticles.concat(response.data[i])
                 });
             }
-            console.log("yowza: " + this.props.mainArticles[1]);
+            console.log("yowza: " + this.props.mainArticles);
         }.bind(this));
     },
     componentDidUpdate: function(prevState) {

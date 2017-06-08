@@ -19,9 +19,13 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static("./public"));
 
 //--------------------------- MONGOOSE ---------------------------
-// mongoose.connect('mongodb://localhost/nytreact');
 
-mongoose.connect('mongodb://heroku_q86tf6tq:m5nidhp2kv9hgp5tb5gjfmise2@ds139949.mlab.com:39949/heroku_q86tf6tq');
+// if (process.env.MONGODB_URI) {
+//   mongoose.connect(process.env.MONGODB_URI)
+// } else {
+  mongoose.connect('mongodb://localhost/nytreact')
+// }
+
 var db = mongoose.connection;
 
 // Show any Mongoose errors
@@ -35,13 +39,10 @@ db.once("open", function() {
 });
 
 //--------------------------- ROUTES ---------------------------
-// Main "/" Route. This will redirect the user to our rendered React application
-// app.get("/", function(req, res) {
-//   res.sendFile(__dirname + "/public/index.html");
-// });
 
 // query MongoDB for all saved articles
 app.get('/api/saved', function(req,res) {
+
     Article.find({}, function(err, doc) {
       if (err) {
         console.log(err);
@@ -84,6 +85,7 @@ app.get('*', function(req,res) {
     res.sendFile(__dirname + "/public/index.html");
 });
 
+//app listening...
 app.listen(PORT,function() {
     console.log('App is listening at ' + PORT);
 })

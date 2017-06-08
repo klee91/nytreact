@@ -1,7 +1,6 @@
 var React = require('react');
 var Main = require('../Main');
 var helpers = require('../utils/helpers.js')
-var SavedArticles = require("./SavedArticles.js");
 
 var Search = React.createClass({
     getInitialState: function() {
@@ -77,7 +76,7 @@ var Search = React.createClass({
     },
     render: function() {
         return (
-            <div className="container">
+            <div>
                 <div className="panel panel-primary">
                     <div className="panel-heading">
                         Search
