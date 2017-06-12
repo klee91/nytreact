@@ -1,9 +1,4 @@
 var React = require('react');
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
 var Search = require("./Components/Search.js");
 var SavedArticles = require("./Components/SavedArticles.js");
 var helpers = require('./utils/helpers.js')
@@ -11,31 +6,32 @@ var helpers = require('./utils/helpers.js')
 var Main = React.createClass({
     getInitialState: function() {
         return {
-            savedArticles: []
+            mainArticles: []
         }
     },
     showSavedArticles: function() {
+        console.log("i ran")
         this.setState({
-            savedArticles: []
+            mainArticles: []
         });
         helpers.getSavedArticles()
         .then(function(response) {
-
+            // console.log('response: ' + response)
             for(var i=0; i < response.data.length; i++) {
                 this.setState({
-                    savedArticles: this.state.savedArticles.concat(response.data[i])
+                    mainArticles: this.state.mainArticles.concat(response.data[i])
                 });
-                console.log("from main: " + this.state.savedArticles[i].title);
             }
         }.bind(this));
     },
     //  On load display the articles
     componentDidMount: function() {
+        console.log("COMPONENT MOUNTED -Main");
         this.showSavedArticles();
     },
   // Whenever our component updates, the code inside componentDidUpdate is run
     componentDidUpdate: function(prevState) {
-        if (prevState.articles !== this.state.articles) {
+        if (prevState.mainArticles !== this.state.mainArticles) {
             console.log("COMPONENT UPDATED");
          }
     },
@@ -43,21 +39,19 @@ var Main = React.createClass({
         return (
             <div>
                 <div className="container-fluid header jumbotron">
-                    <h1 className="text-center">New York Times Article Scrubber</h1>
-                    <p className="text-center">Search for and annotate articles of interest!</p>
+                    <h1 id="title" className="text-center">New York Times Article Scrubber</h1>
+                    <p id="subtext" className="text-center">Search for and annotate articles of interest!</p>
                 </div>
 
                 {/* Search Component*/}
                 <div className="col-xs-8 col-xs-offset-2">
-                    <Search articleSearch={this.articleSearch}
-                            showSavedArticles={this.showSavedArticles}
-                    />
+                    <Search showSavedArticles={this.showSavedArticles} />
                 </div>
 
                 {/* Saved Articles Component*/}
                 <div className="col-xs-8 col-xs-offset-2">
                     <SavedArticles 
-                        mainArticles={this.state.savedArticles}
+                        mainArticles={this.state.mainArticles}
                         showSavedArticles={this.showSavedArticles}
                     />
                 </div>

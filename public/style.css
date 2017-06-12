@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline');
+
+#title {
+    font-family: 'Bungee Inline', 'Arial', cursive !important;
+}
+
+.jumbotron {
+    box-shadow: inset 0px 0px 7px #bebebe;
+}
+
+.searchParams {
+    width: 25%;
+    margin: 5px;
+    float: left;
+}
+
+#searchBtn {
+    height: 35px;
+    width: 80px;
+    margin-left: 2em;
+    margin-top: 2em;
+}

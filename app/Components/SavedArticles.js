@@ -6,12 +6,27 @@ var Search = require("./Search.js");
 var SavedArticles = React.createClass({
     getInitialState: function() {
         return {
-            savedArticles: [1]
+            savedArticles: this.props.mainArticles
         }
     },
     componentDidMount: function() {
         console.log("COMPONENT MOUNTED -SavedArticle");
+        
+        this.refresh();
 
+    },
+    componentDidUpdate: function(prevState) {
+         if (prevState.savedArticles !== this.state.savedArticles) {
+            console.log("COMPONENT UPDATED");
+         }
+    },
+    refresh: function() {
+        //clear current state
+        this.setState({
+            savedArticles: []
+        });
+
+        //update current state
         helpers.getSavedArticles()
         .then(function(response) {
 
@@ -19,14 +34,10 @@ var SavedArticles = React.createClass({
                 this.setState({
                     savedArticles: this.state.savedArticles.concat(response.data[i])
                 });
+                console.log(this.state.savedArticles[i]);
             }
-            console.log("yowza: " + this.props.mainArticles);
+            
         }.bind(this));
-    },
-    componentDidUpdate: function(prevState) {
-         if (prevState.articles !== this.state.articles) {
-            console.log("COMPONENT UPDATED");
-         }
     },
     //handle delete button function 
     handleDelete: function(UID) {
@@ -35,23 +46,10 @@ var SavedArticles = React.createClass({
         .then(function() {
             console.log('Deleted article from MongoDB');
 
-            //clear current state
-            this.setState({
-                savedArticles: []
-            });
-
             //update parent state
             this.props.showSavedArticles();
 
-            //update current state
-            helpers.getSavedArticles()
-            .then(function(response) {
-                for(var i=0; i < response.data.length; i++) {
-                    this.setState({
-                        savedArticles: this.state.savedArticles.concat(response.data[i])
-                    });
-                }
-            }.bind(this));
+            this.refresh();
 
         }.bind(this));
     },
@@ -61,7 +59,7 @@ var SavedArticles = React.createClass({
             <div>
                 {this.state.savedArticles.map(function(article) {
                     return (
-                        <div className="savedArticle" key={article._id} data-id={article._id}>
+                        <div className="savedArticle" key={article._id}>
                             <h3>{article.title}</h3>
                             <button className="btn btn-primary float-right" 
                             onClick={() => this.handleDelete(article._id)} id={article._id}>Delete</button>

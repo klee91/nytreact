@@ -1,6 +1,7 @@
 var React = require('react');
 var Main = require('../Main');
 var helpers = require('../utils/helpers.js')
+var SavedArticles = require("./SavedArticles.js");
 
 var Search = React.createClass({
     getInitialState: function() {
@@ -42,7 +43,6 @@ var Search = React.createClass({
         var c = this.refs.endDate.value;
         
         this.articleSearch(a,b,c);
-        console.log('submitted');
     },
     handleSave: function(article) {
 
@@ -53,8 +53,10 @@ var Search = React.createClass({
             url: article.url
         }).then(function() {
             console.log("Posted to MongoDB");
+
         //update parent state
         this.props.showSavedArticles();
+
         }.bind(this));
 
     },
@@ -82,24 +84,31 @@ var Search = React.createClass({
                         Search
                     </div>
                     <div className="panel-body">
-                        <form onSubmit={this.handleSubmit}>
-
-                            <label htmlFor="topic">Topic:</label>
-                            <input 
-                            type="text" 
-                            placeholder="Climate Change..." 
-                            name="topic" ref="topic"/>
-                            <label htmlFor="startDate">Start Year:</label>
-                            <input 
-                            type="text" 
-                            placeholder="YYYYMMDD" 
-                            name="startDate" ref="startDate"/>
-                            <label htmlFor="endDate">End Year:</label>
+                        <form className ="col-xs-12" onSubmit={this.handleSubmit}>
+                            <div className="searchParams">
+                                <label htmlFor="topic">Topic:  </label>
+                                <br />
+                                <input
+                                type="text" 
+                                placeholder="Climate Change..." 
+                                name="topic" ref="topic"/>
+                            </div>
+                            <div className="searchParams">
+                                <label htmlFor="startDate">Start Year:  </label>
+                                <br />
+                                <input 
+                                type="text" 
+                                placeholder="YYYYMMDD" 
+                                name="startDate" ref="startDate"/>
+                            </div>
+                            <div className="searchParams">
+                            <label htmlFor="endDate">End Year: </label>
+                            <br />
                             <input 
                             type="text" 
                             placeholder="YYYYMMDD" 
                             name="endDate" ref="endDate"/>
-
+                            </div>
                             <input type="submit" value="Search" id="searchBtn" onSubmit={this.handleSubmit}/>
                         </form>
                     </div>
